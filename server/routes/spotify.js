@@ -18,4 +18,7 @@ router.get('/artist/:id/albums', spotifyController.getArtistAlbums);
 // Get album details by album ID
 router.get('/album/:id', spotifyController.getAlbumDetails);
 
+// Find tracks with previews available
+router.get('/find-previews', spotifyController.findTracksWithPreviews);
+
 module.exports = router;
