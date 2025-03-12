@@ -1,6 +1,42 @@
-# Ignore virtual environment
-venv/
-env/
-
-# Environment variables
+# Environment variables - contains sensitive API keys
 .env
+/venv
+
+# Node.js dependencies
+node_modules/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Logs
+logs
+*.log
+
+# Cache directories
+.npm
+.eslintcache
+.node_repl_history
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/dist
+/build
+
+# Temporary files
+/tmp
+/temp
