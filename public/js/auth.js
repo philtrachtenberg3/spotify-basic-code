@@ -3,6 +3,9 @@
  * Handles Spotify authentication flow and token management
  */
 
+// Add at the top of public/js/auth.js
+console.log('Auth.js is loading');
+
 // Auth state
 let authState = {
     authenticated: false,
@@ -47,11 +50,28 @@ let authState = {
       return authState;
     }
   }
+
+  function debugAuthState() {
+    console.log("Auth state:", window.spotifyAuth.getAuthState());
+    console.log("Cookies:", document.cookie);
+  }
+
+  // set up the window.spotifyAuth object
+  window.spotifyAuth = {
+    initAuth,
+    login,
+    logout,
+    getAuthState,
+    spotifyApiRequest
+  };
+
+  debugAuthState();
   
   /**
    * Login with Spotify
    */
   function login() {
+    console.log('Login button clicked, redirecting to /auth/login');
     window.location.href = '/auth/login';
   }
   
@@ -145,6 +165,7 @@ let authState = {
    * Update UI based on authentication state
    */
   function updateAuthUI() {
+    console.log("Updating Auth UI with state:", authState);
     const loginButton = document.getElementById('loginButton');
     const logoutButton = document.getElementById('logoutButton');
     const userInfo = document.getElementById('userInfo');
@@ -225,6 +246,7 @@ let authState = {
   }
   
   // Export functions
+  console.log("Setting up window.spotifyAuth...");
   window.spotifyAuth = {
     initAuth,
     login,
@@ -232,3 +254,4 @@ let authState = {
     getAuthState,
     spotifyApiRequest
   };
+  console.log("window.spotifyAuth has been set:", window.spotifyAuth);

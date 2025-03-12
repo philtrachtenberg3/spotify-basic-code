@@ -10,6 +10,8 @@ let playerConnected = false;
 let currentTrackId = null;
 window.playerIsPlaying = false;
 
+console.log("Player.js loading, SDK ready:", !!window.Spotify);
+
 // DOM elements
 const nowPlayingTitle = document.getElementById('nowPlayingTitle');
 const nowPlayingArtist = document.getElementById('nowPlayingArtist');
@@ -32,9 +34,15 @@ window.onSpotifyWebPlaybackSDKReady = () => {
  */
 async function initPlayer() {
   const authState = window.spotifyAuth.getAuthState();
+  console.log("Init player with auth state:", authState);
   
   if (!authState.authenticated) {
     console.warn('Cannot initialize player: User not authenticated');
+    return false;
+  }
+  
+  if (!window.Spotify) {
+    console.error("Spotify Web Playback SDK not loaded!");
     return false;
   }
   
