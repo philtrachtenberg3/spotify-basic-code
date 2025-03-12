@@ -144,6 +144,9 @@ exports.getArtistAlbums = async (req, res) => {
 /**
  * Get album details by album ID
  */
+/**
+ * Get album details by album ID
+ */
 exports.getAlbumDetails = async (req, res) => {
   try {
     const { id } = req.params;
@@ -161,6 +164,27 @@ exports.getAlbumDetails = async (req, res) => {
         'Authorization': `Bearer ${token}`
       }
     });
+    
+    // Log preview URL availability for debugging
+    const tracks = response.data.tracks.items;
+    const availablePreviews = tracks.filter(track => track.preview_url).length;
+    console.log(`\nAlbum: ${response.data.name}`);
+    console.log(`Tracks with preview URLs: ${availablePreviews}/${tracks.length}`);
+    
+    if (availablePreviews === 0) {
+      console.log("WARNING: No tracks have preview URLs. This could be due to:");
+      console.log("1. Regional restrictions (Spotify limits previews in some regions)");
+      console.log("2. Rights holder restrictions (some artists/labels don't allow previews)");
+      console.log("3. Recent Spotify API changes");
+      
+      // Log a sample track for debugging
+      if (tracks.length > 0) {
+        console.log("\nSample track from response:");
+        console.log(`Track: ${tracks[0].name}`);
+        console.log("Has preview URL:", !!tracks[0].preview_url);
+        console.log("Preview URL:", tracks[0].preview_url || "not available");
+      }
+    }
     
     res.json(response.data);
   } catch (error) {
