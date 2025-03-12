@@ -412,9 +412,7 @@ exports.findTracksWithPreviews = async (req, res) => {
     }
   };
   
-  /**
-   * Get album details by album ID
-   */
+
   /**
    * Get album details by album ID
    */
@@ -461,5 +459,44 @@ exports.findTracksWithPreviews = async (req, res) => {
     } catch (error) {
       console.error('Error getting album details:', error.message);
       res.status(500).json({ error: 'Failed to get album details' });
+    }
+  };
+
+  /**
+ * Get track details by track ID
+ */
+exports.getTrackDetails = async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      if (!id) {
+        return res.status(400).json({ error: 'Track ID is required' });
+      }
+      
+      const token = await getSpotifyToken();
+      
+      const response = await axios({
+        method: 'get',
+        url: `https://api.spotify.com/v1/tracks/${id}`,
+        params: {
+          market: 'US' // Explicitly request US market which often has more previews
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      // Log if preview URL is available
+      const hasPreview = !!response.data.preview_url;
+      console.log(`Track: ${response.data.name}`);
+      console.log(`Has preview URL: ${hasPreview}`);
+      
+      res.json(response.data);
+    } catch (error) {
+      console.error('Error getting track details:', error.message);
+      if (error.response) {
+        console.error('Spotify API response:', error.response.data);
+      }
+      res.status(500).json({ error: 'Failed to get track details' });
     }
   };

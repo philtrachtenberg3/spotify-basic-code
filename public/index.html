@@ -8,6 +8,15 @@
 </head>
 <body>
     <h1>Virtual Vinyl Player</h1>
+    
+    <div class="auth-container">
+        <div id="userInfo" class="user-info">
+            <!-- User profile will be displayed here -->
+        </div>
+        <button id="loginButton" class="auth-button login-button">Connect with Spotify</button>
+        <button id="logoutButton" class="auth-button logout-button">Logout</button>
+    </div>
+    
     <div class="container">
         <div class="controls">
             <input type="text" id="artistInput" placeholder="Enter artist name">
@@ -16,7 +25,6 @@
                 <option value="">Select an album</option>
             </select>
             <button id="loadAlbumBtn" disabled>Load Album</button>
-            <button id="findPreviewsBtn">Find Tracks with Previews</button>
         </div>
 
         <div class="player">
@@ -39,13 +47,23 @@
 
         <div class="track-list" id="trackList"></div>
 
-        <div id="previewsContainer" class="previews-container">
-            <!-- Previews results will go here -->
+        <div id="player-status" class="player-status">
+            <div class="playback-info">
+                <div class="now-playing-label">Now Playing</div>
+                <div id="nowPlayingTitle" class="now-playing-title">Not Playing</div>
+                <div id="nowPlayingArtist" class="now-playing-artist"></div>
+            </div>
         </div>
 
         <audio id="audioPlayer" controls></audio>
     </div>
 
+    <!-- Load the Spotify Web Playback SDK -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    
+    <!-- Load our JavaScript files -->
+    <script src="js/auth.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
