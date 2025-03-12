@@ -6,6 +6,7 @@ import json
 
 load_dotenv()
 
+# get client id and secret from spotify project
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
